@@ -132,6 +132,10 @@ register(
 # ----------------------------------------
 
 register(
+    id='BitFlip-v0',
+    entry_point='gym.envs.toy_text:BitFlipEnv')
+
+register(
     id='Blackjack-v0',
     entry_point='gym.envs.toy_text:BlackjackEnv',
 )
