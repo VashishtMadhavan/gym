@@ -64,7 +64,7 @@ class RobotEnv(gym.GoalEnv):
         done = False
         info = {
             'is_success': self._is_success(obs['achieved_goal'], self.goal),
-            'achieved_goal': obs['achieved_goal'].copy()
+            'achieved_goal': obs['achieved_goal'].copy(),
         }
         reward = self.compute_reward(obs['achieved_goal'], self.goal, info)
         return obs, reward, done, info

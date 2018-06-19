@@ -171,6 +171,21 @@ register(
     entry_point='gym.envs.toy_text:CliffWalkingEnv',
 )
 
+k_values = [5, 10, 50]
+n_values = [10, 100, 500]
+
+for k_val in k_values:
+    for n_val in n_values:
+        kwargs = {
+            'n': n_val,
+            'k': k_val
+        }
+        register(
+            id='Bandit_k{}_n{}-v0'.format(k_val, n_val),
+            entry_point='gym.envs.toy_text:BanditEnv',
+            kwargs=kwargs,
+            max_episode_steps=1000)
+
 register(
     id='NChain-v0',
     entry_point='gym.envs.toy_text:NChainEnv',
