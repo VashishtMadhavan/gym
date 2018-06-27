@@ -11,7 +11,8 @@ class BanditEnv(gym.Env):
         self.k = k
         self.n = n
         self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
-        self.observation_space = spaces.Box(-np.inf*np.ones(3), np.inf*np.ones(3))
+        obs_dim = 3 + self.k
+        self.observation_space = spaces.Box(-np.inf*np.ones(obs_dim), np.inf*np.ones(obs_dim))
         self.action_space = spaces.Discrete(self.k)
         self.t = 0
         self.prev_reward = 0.
@@ -31,14 +32,21 @@ class BanditEnv(gym.Env):
         done = False
         if self.t >= self.n:
             done = True
-        obs = np.array([0., self.prev_reward, self.prev_done])
+        action_one_hot = np.zeros(self.k)
+        action_one_hot[action] = 1.
+        obs = np.array([0., reward, done])
+        obs = np.concatenate((obs, action_one_hot))
         self.prev_reward = reward
         self.prev_done = done
         return obs, reward, done, {}
 
     def reset(self):
-        self.probs = np.random.uniform(low=0.0, high=1.0, size=self.n)
+        self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
         self.t = 0
         self.prev_reward = 0.
         self.prev_done = 0.
-        return np.array([0., self.prev_reward, self.prev_done])
+        action_one_hot = np.zeros(self.k)
+        action_one_hot[0] = 1.
+        obs = np.array([0., 0., 0.])
+        obs = np.concatenate((obs, action_one_hot))
+        return obs
