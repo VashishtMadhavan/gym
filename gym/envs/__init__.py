@@ -171,7 +171,7 @@ register(
     entry_point='gym.envs.toy_text:CliffWalkingEnv',
 )
 
-k_values = [5, 10, 50]
+k_values = [2, 5, 10, 50]
 n_values = [10, 100, 500]
 
 for k_val in k_values:
@@ -184,11 +184,6 @@ for k_val in k_values:
             id='Bandit_k{}_n{}-v0'.format(k_val, n_val),
             entry_point='gym.envs.toy_text:BanditEnv',
             kwargs=kwargs,
-            max_episode_steps=1000)
-        register(
-            id='TwoBandit_n{}-v0'.format(n_val)),
-            entry_point='gym.envs.toy_text:TwoBanditEnv',
-            kwargs={'n': n_val},
             max_episode_steps=1000)
 
 register(
