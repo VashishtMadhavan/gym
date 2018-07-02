@@ -185,6 +185,11 @@ for k_val in k_values:
             entry_point='gym.envs.toy_text:BanditEnv',
             kwargs=kwargs,
             max_episode_steps=1000)
+        register(
+            id='TwoBandit_n{}-v0'.format(n_val)),
+            entry_point='gym.envs.toy_text:TwoBanditEnv',
+            kwargs={'n': n_val},
+            max_episode_steps=1000)
 
 register(
     id='NChain-v0',

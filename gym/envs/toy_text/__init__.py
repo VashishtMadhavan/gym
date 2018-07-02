@@ -9,3 +9,4 @@ from gym.envs.toy_text.kellycoinflip import KellyCoinflipGeneralizedEnv
 from gym.envs.toy_text.cliffwalking import CliffWalkingEnv
 from gym.envs.toy_text.bitflip import BitFlipEnv
 from gym.envs.toy_text.bandit import BanditEnv
+from gym.envs.toy_text.two_bandit import TwoBanditEnv
