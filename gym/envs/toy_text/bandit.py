@@ -10,7 +10,10 @@ class BanditEnv(gym.Env):
     def __init__(self, k=5, n=10):
         self.k = k
         self.n = n
-        self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
+        #self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
+        p1 = np.random.choice([0.1, 0.9])
+        p2 = 1. - p1
+        self.probs = np.array([p1, p2])
         obs_dim = 4 + self.k
         self.observation_space = spaces.Box(-np.inf*np.ones(obs_dim), np.inf*np.ones(obs_dim))
         self.action_space = spaces.Discrete(self.k)
@@ -41,7 +44,10 @@ class BanditEnv(gym.Env):
         return obs, reward, done, {}
 
     def reset(self):
-        self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
+        #self.probs = np.random.uniform(low=0.0, high=1.0, size=self.k)
+        p1 = np.random.choice([0.1, 0.9])
+        p2 = 1. - p1
+        self.probs = np.array([p1, p2])
         self.t = 0
         self.prev_reward = 0.
         self.prev_done = 0.
