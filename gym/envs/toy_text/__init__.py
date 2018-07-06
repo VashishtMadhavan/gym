@@ -8,4 +8,8 @@ from gym.envs.toy_text.kellycoinflip import KellyCoinflipEnv
 from gym.envs.toy_text.kellycoinflip import KellyCoinflipGeneralizedEnv
 from gym.envs.toy_text.cliffwalking import CliffWalkingEnv
 from gym.envs.toy_text.bitflip import BitFlipEnv
-from gym.envs.toy_text.bandit import BanditEnv
+from gym.envs.toy_text.indep_bandit import IndependentBanditEnv
+from gym.envs.toy_text.easy_bandit import EasyBanditEnv
+from gym.envs.toy_text.medium_bandit import MediumBanditEnv
+from gym.envs.toy_text.hard_bandit import HardBanditEnv
+from gym.envs.toy_text.uniform_bandit import UniformBanditEnv

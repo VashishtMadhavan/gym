@@ -171,6 +171,11 @@ register(
     entry_point='gym.envs.toy_text:CliffWalkingEnv',
 )
 
+"""
+
+Bandit Envs
+
+"""
 k_values = [2, 5, 10, 50]
 n_values = [10, 100, 500]
 
@@ -181,10 +186,31 @@ for k_val in k_values:
             'k': k_val
         }
         register(
-            id='Bandit_k{}_n{}-v0'.format(k_val, n_val),
-            entry_point='gym.envs.toy_text:BanditEnv',
+            id='IndepBandit_k{}_n{}-v0'.format(k_val, n_val),
+            entry_point='gym.envs.toy_text:IndependentBanditEnv',
             kwargs=kwargs,
             max_episode_steps=1000)
+
+register(
+    id='EasyBandit-v0',
+    entry_point='gym.envs.toy_text:EasyBanditEnv',
+    max_episode_steps=1000,
+)
+register(
+    id='MediumBandit-v0',
+    entry_point='gym.envs.toy_text:MediumBanditEnv',
+    max_episode_steps=1000,
+)
+register(
+    id='HardBandit-v0',
+    entry_point='gym.envs.toy_text:HardBanditEnv',
+    max_episode_steps=1000,
+)
+register(
+    id='UniformBandit-v0',
+    entry_point='gym.envs.toy_text:UniformBanditEnv',
+    max_episode_steps=1000,
+)
 
 register(
     id='NChain-v0',
