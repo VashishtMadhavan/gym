@@ -29,11 +29,11 @@ class PLEEnv(gym.Env):
         state = self._get_image()
         #import scipy.misc
         #scipy.misc.imsave('outfile'+str(self.count)+'.jpg', state)
-        #self.count = self.count+1
+        self.count = self.count + 1
         terminal = self.game_state.game_over()
         #print(randomAction)
         #print(a,self._action_set[a])
-        return state, reward, terminal, {}
+        return state, reward, terminal, {'steps': int(self.count)}
 
     def _get_image(self):
         #image_rotated = self.game_state.getScreenRGB()
@@ -45,6 +45,7 @@ class PLEEnv(gym.Env):
         return len(self._action_set)
 
     def reset(self):
+        self.count = 0
         self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3))
         self.game_state.reset_game()
         state = self._get_image()
