@@ -477,6 +477,14 @@ for game in ['Catcher', 'originalGame','nosemantics','noobject','nosimilarity','
         nondeterministic=False,
     )
 
+register(
+    id='metaGame-v0',
+    entry_point='gym.envs.ple:MetaPLEEnv',
+    kwargs={'display_screen':False},
+    tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
+    nondeterministic=False,
+)
+
 # Atari
 # ----------------------------------------
 
