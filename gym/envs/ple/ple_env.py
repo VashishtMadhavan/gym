@@ -14,7 +14,10 @@ class PLEEnv(gym.Env):
         import importlib
         game_module_name = ('ple.games.%s' % game_name).lower()
         game_module = importlib.import_module(game_module_name)
-        game = getattr(game_module, game_name)()
+        if game_name == "customgame":
+            game = getattr(game_module, game_name)(vec=[2, 2])
+        else:
+            game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)
         self.game_state.init()
         self._action_set = self.game_state.getActionSet()
@@ -39,6 +42,10 @@ class PLEEnv(gym.Env):
         #image_rotated = self.game_state.getScreenRGB()
         image_rotated = np.fliplr(np.rot90(self.game_state.getScreenRGB(),3)) # Hack to fix the rotated image returned by ple
         return image_rotated
+
+    def update_vec(self, vec):
+        if hasattr(self.game_state.game, 'update_vec'):
+            self.game_state.game.update_vec(vec)
 
     @property
     def _n_actions(self):
