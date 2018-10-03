@@ -19,7 +19,6 @@ class PLEEnv(gym.Env):
         else:
             game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)
-        self.game_state.init()
         self._action_set = self.game_state.getActionSet()
         self.action_space = spaces.Discrete(len(self._action_set))
         self.screen_width, self.screen_height = self.game_state.getScreenDims()
@@ -30,16 +29,11 @@ class PLEEnv(gym.Env):
     def step(self, a):
         reward = self.game_state.act(self._action_set[a])
         state = self._get_image()
-        #import scipy.misc
-        #scipy.misc.imsave('outfile'+str(self.count)+'.jpg', state)
         self.count = self.count + 1
         terminal = self.game_state.game_over()
-        #print(randomAction)
-        #print(a,self._action_set[a])
         return state, reward, terminal, {'steps': int(self.count)}
 
     def _get_image(self):
-        #image_rotated = self.game_state.getScreenRGB()
         image_rotated = np.fliplr(np.rot90(self.game_state.getScreenRGB(),3)) # Hack to fix the rotated image returned by ple
         return image_rotated
 
