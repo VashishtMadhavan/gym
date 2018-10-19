@@ -7,7 +7,7 @@ import os
 class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, game_name, display_screen=True):
+    def __init__(self, game_name, difficulty=0, display_screen=True):
         # set headless mode
         os.environ['SDL_VIDEODRIVER'] = 'dummy'
         # open up a game state to communicate with emulator
@@ -15,7 +15,7 @@ class PLEEnv(gym.Env):
         game_module_name = ('ple.games.%s' % game_name).lower()
         game_module = importlib.import_module(game_module_name)
         if game_name == "customgame":
-            game = getattr(game_module, game_name)(vec=[2, 2])
+            game = getattr(game_module, game_name)(vec=[2, 2], difficulty=difficulty)
         else:
             game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)
@@ -36,10 +36,6 @@ class PLEEnv(gym.Env):
     def _get_image(self):
         image_rotated = np.fliplr(np.rot90(self.game_state.getScreenRGB(),3)) # Hack to fix the rotated image returned by ple
         return image_rotated
-
-    def update_vec(self, vec):
-        if hasattr(self.game_state.game, 'update_vec'):
-            self.game_state.game.update_vec(vec)
 
     @property
     def _n_actions(self):

@@ -479,6 +479,24 @@ for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemant
 
 for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
     register(
+        id='{}-v1'.format(game),
+        entry_point='gym.envs.ple:PLEEnv',
+        kwargs={'game_name': game, 'difficulty': 1, 'display_screen':False},
+        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
+        nondeterministic=False,
+    )
+
+for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
+    register(
+        id='{}-v2'.format(game),
+        entry_point='gym.envs.ple:PLEEnv',
+        kwargs={'game_name': game, 'difficulty': 2, 'display_screen':False},
+        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
+        nondeterministic=False,
+    )
+
+for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
+    register(
         id='{}_multi-v0'.format(game),
         entry_point='gym.envs.ple:PLEMultiEnv',
         kwargs={'game_name': game, 'num_eps': 2, 'display_screen':False},
