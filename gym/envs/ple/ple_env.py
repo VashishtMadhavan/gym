@@ -7,7 +7,7 @@ import os
 class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, game_name, difficulty=0, display_screen=True):
+    def __init__(self, game_name, difficulty=0, astar=False, display_screen=True):
         # set headless mode
         os.environ['SDL_VIDEODRIVER'] = 'dummy'
         # open up a game state to communicate with emulator
@@ -15,7 +15,7 @@ class PLEEnv(gym.Env):
         game_module_name = ('ple.games.%s' % game_name).lower()
         game_module = importlib.import_module(game_module_name)
         if game_name == "customgame":
-            game = getattr(game_module, game_name)(vec=[2, 2], difficulty=difficulty)
+            game = getattr(game_module, game_name)(vec=[2, 2], difficulty=difficulty, astar=astar)
         else:
             game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)
