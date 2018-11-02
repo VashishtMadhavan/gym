@@ -31,6 +31,8 @@ class PLEEnv(gym.Env):
         state = self._get_image()
         self.count = self.count + 1
         terminal = self.game_state.game_over()
+        if terminal:
+            reward = self.game_state.game.newGame.score
         return state, reward, terminal, {'steps': int(self.count)}
 
     def _get_image(self):
