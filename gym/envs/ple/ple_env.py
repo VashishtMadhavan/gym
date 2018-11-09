@@ -31,9 +31,11 @@ class PLEEnv(gym.Env):
         state = self._get_image()
         self.count = self.count + 1
         terminal = self.game_state.game_over()
+        info = {'steps': int(self.count)}
         if terminal:
             reward = self.game_state.game.newGame.score
-        return state, reward, terminal, {'steps': int(self.count)}
+            info['success'] = bool(reward == 1.)
+        return state, reward, terminal, info
 
     def _get_image(self):
         image_rotated = np.fliplr(np.rot90(self.game_state.getScreenRGB(),3)) # Hack to fix the rotated image returned by ple
