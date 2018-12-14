@@ -482,7 +482,7 @@ for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemant
         id='{}-v0'.format(game),
         entry_point='gym.envs.ple:PLEEnv',
         kwargs={'game_name': game, 'display_screen': False, 'difficulty': 0},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
+        tags={'wrapper_config.TimeLimit.max_episode_steps': 200},
         nondeterministic=False,
     )
 
