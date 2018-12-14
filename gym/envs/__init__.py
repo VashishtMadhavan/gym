@@ -218,6 +218,15 @@ register(
     max_episode_steps=1000,
 )
 
+ds_size = [10, 20, 30, 40]
+for ds in ds_size:
+    register(
+        id='DeepSea{}-v0'.format(ds),
+        entry_point='gym.envs.toy_text:DeepSeaEnv',
+        kwargs={'n': ds, 'random': True},
+        max_episode_steps=ds,
+    )
+
 register(
     id='Roulette-v0',
     entry_point='gym.envs.toy_text:RouletteEnv',

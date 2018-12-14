@@ -13,3 +13,4 @@ from gym.envs.toy_text.easy_bandit import EasyBanditEnv
 from gym.envs.toy_text.medium_bandit import MediumBanditEnv
 from gym.envs.toy_text.hard_bandit import HardBanditEnv
 from gym.envs.toy_text.uniform_bandit import UniformBanditEnv
+from gym.envs.toy_text.deep_sea import DeepSeaEnv
