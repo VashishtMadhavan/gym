@@ -481,66 +481,10 @@ for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemant
     register(
         id='{}-v0'.format(game),
         entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'display_screen':False},
+        kwargs={'game_name': game, 'display_screen': False, 'difficulty': 0},
         tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
         nondeterministic=False,
     )
-    register(
-        id='{}_astar-v0'.format(game),
-        entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'astar': True, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-
-for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
-    register(
-        id='{}-v1'.format(game),
-        entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'difficulty': 1, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-    register(
-        id='{}_astar-v1'.format(game),
-        entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'difficulty': 1, 'astar': True, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-
-for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
-    register(
-        id='{}-v2'.format(game),
-        entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'difficulty': 2, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-    register(
-        id='{}_astar-v2'.format(game),
-        entry_point='gym.envs.ple:PLEEnv',
-        kwargs={'game_name': game, 'difficulty': 2, 'astar': True, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-
-for game in ['Catcher', 'originalGame', 'continualgame', 'customgame', 'nosemantics','noobject','nosimilarity','noaffordance', 'FlappyBird', 'Pixelcopter', 'PuckWorld', 'RaycastMaze', 'Snake', 'WaterWorld']:
-    register(
-        id='{}_multi-v0'.format(game),
-        entry_point='gym.envs.ple:PLEMultiEnv',
-        kwargs={'game_name': game, 'num_eps': 2, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-        nondeterministic=False,
-    )
-
-register(
-    id='metaGame-v0',
-    entry_point='gym.envs.ple:MetaPLEEnv',
-    kwargs={'display_screen':False},
-    tags={'wrapper_config.TimeLimit.max_episode_steps': 100000},
-    nondeterministic=False,
-)
 
 # Atari
 # ----------------------------------------
