@@ -14,7 +14,7 @@ class DeepSeaEnv(gym.Env):
         self._row = 0
 
         if random:
-          rng = np.random.RandomState(seed)
+          rng = np.random.RandomState(None)
           self._action_mapping = rng.binomial(1, 0.5, n)
         else:
           self._action_mapping = np.ones(n)
