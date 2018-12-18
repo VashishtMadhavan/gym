@@ -6,8 +6,8 @@ import numpy as np
 
 class DeepSeaEnv(gym.Env):
     def __init__(self, n=20, random=True):
-        self._size = size
-        self._move_cost = 0.01 / size
+        self._size = n
+        self._move_cost = 0.01 / n
         self._goal_reward = 1.
 
         self._column = 0
@@ -15,9 +15,9 @@ class DeepSeaEnv(gym.Env):
 
         if randomize:
           rng = np.random.RandomState(seed)
-          self._action_mapping = rng.binomial(1, 0.5, size)
+          self._action_mapping = rng.binomial(1, 0.5, n)
         else:
-          self._action_mapping = np.ones(size)
+          self._action_mapping = np.ones(n)
 
         self._reset_next_step = False
 
