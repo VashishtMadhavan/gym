@@ -218,7 +218,7 @@ register(
     max_episode_steps=1000,
 )
 
-ds_size = [10, 20, 30, 40]
+ds_size = [5, 10, 20, 30, 40]
 for ds in ds_size:
     register(
         id='DeepSea{}-v0'.format(ds),
