@@ -44,17 +44,16 @@ class DeepSeaEnv(gym.Env):
         if self._row == self._size:
             observation = self._get_observation(self._row-1, self._column)
             self._reset_next_step = True
-            return observation, reward, False, {}
+            return observation, reward, True, {}
         else:
             observation = self._get_observation(self._row, self._column)
-            return observation, reward, True, {}
+            return observation, reward, False, {}
 
     def reset(self):
         self._reset_next_step = False
         self._column = 0
         self._row = 0
-        observation = self._get_observation(self._row, self._column)
-        return observation, reward, True, {}
+        return self._get_observation(self._row, self._column)
 
     def _get_observation(self, row, column):
         observation = np.zeros(shape=(self._size, self._size), dtype=np.float32)
@@ -63,7 +62,7 @@ class DeepSeaEnv(gym.Env):
 
     @property
     def obs_shape(self):
-        return self.reset().observation.shape
+        return self.reset().shape
 
     @property
     def num_actions(self):
@@ -71,5 +70,5 @@ class DeepSeaEnv(gym.Env):
 
     @property
     def optimal_return(self):
-        return self._goal_reward - self._move_cost
+        return self._goal_reward - (self._size) * self._move_cost
     

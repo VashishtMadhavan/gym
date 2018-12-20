@@ -218,12 +218,12 @@ register(
     max_episode_steps=1000,
 )
 
-ds_size = [5, 10, 20, 30, 40]
+ds_size = [3, 5, 10, 20, 30, 40]
 for ds in ds_size:
     register(
         id='DeepSea{}-v0'.format(ds),
         entry_point='gym.envs.toy_text:DeepSeaEnv',
-        kwargs={'n': ds, 'random': True},
+        kwargs={'n': ds, 'random': False},
         max_episode_steps=ds,
     )
 
