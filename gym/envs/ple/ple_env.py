@@ -15,7 +15,7 @@ class PLEEnv(gym.Env):
         game_module_name = ('ple.games.%s' % game_name).lower()
         game_module = importlib.import_module(game_module_name)
         if game_name == "customgame":
-            game = getattr(game_module, game_name)(difficulty=difficulty)
+            game = getattr(game_module, game_name)()
         else:
             game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)

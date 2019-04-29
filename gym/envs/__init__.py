@@ -130,10 +130,12 @@ register(
 
 # Toy Text
 # ----------------------------------------
-
-register(
-    id='BitFlip-v0',
-    entry_point='gym.envs.toy_text:BitFlipEnv')
+bits = [5, 10, 20, 30, 40]
+for b in bits:
+    register(
+        id='BitFlip{}-v0'.format(b),
+        kwargs={'n': b},
+        entry_point='gym.envs.toy_text:BitFlipEnv')
 
 register(
     id='Blackjack-v0',
