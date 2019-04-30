@@ -17,11 +17,16 @@ class BitFlipEnv(gym.Env):
 		self.action_space = spaces.Discrete(n)
 		self.observation_space = spaces.Discrete(n*2)
 		self.observation_space.shape = (n*2,)
-		self.state = np.random.binomial(1, 0.5, size=(2 * self.n)).astype(np.float32)
+		self.seed()
+		self.state = self.np_random.binomial(1, 0.5, size=(2 * self.n)).astype(np.float32)
+
+	def seed(self, seed=None):
+		self.np_random, seed = seeding.np_random(seed)
+		return [seed]
 
 	def substitute_goal(self, observation, goal):
 		k = int(self.n)
-		return np.concatenate([observation[:k], goal], axis=-1)
+		return self.np_random.concatenate([observation[:k], goal], axis=-1)
 
 	def compute_reward(self, achieved_goal, goal, info):
 		success = list(achieved_goal) == list(goal)
@@ -42,6 +47,6 @@ class BitFlipEnv(gym.Env):
 		return self.state, reward, done, info
 
 	def reset(self):
-		self.state = np.random.binomial(1, 0.5, size=(2 * self.n)).astype(np.float32)
+		self.state = self.np_random.binomial(1, 0.5, size=(2 * self.n)).astype(np.float32)
 		self.flip_tsteps = int(self.n)
 		return self.state
