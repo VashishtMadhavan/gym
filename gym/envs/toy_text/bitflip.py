@@ -30,7 +30,6 @@ class BitFlipEnv(gym.Env):
 
 	def compute_reward(self, achieved_goal, goal, info):
 		success = list(achieved_goal) == list(goal)
-		info['goal_dist'] = 0.
 		info['is_success'] = float(success)
 		info['achieved_goal'] = np.array(achieved_goal)
 		info['desired_goal'] = np.array(goal)
