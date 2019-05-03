@@ -347,6 +347,12 @@ register(
     max_episode_steps=1000,
 )
 
+register(
+    id='AntMaze-v2',
+    entry_point='gym.envs.mujoco:AntMazeEnv',
+    max_episode_steps=200,
+)
+
 # Robotics
 # ----------------------------------------
 
