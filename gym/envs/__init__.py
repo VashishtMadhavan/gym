@@ -267,6 +267,13 @@ register(
 )
 
 register(
+    id='BigReacher-v2',
+    entry_point='gym.envs.mujoco:BigReacherEnv',
+    max_episode_steps=100,
+    reward_threshold=0.0,
+)
+
+register(
     id='Pusher-v2',
     entry_point='gym.envs.mujoco:PusherEnv',
     max_episode_steps=100,
