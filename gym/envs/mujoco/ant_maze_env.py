@@ -14,7 +14,8 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         - (optionally, commented for now) 84 contact forces
     """
     def __init__(self):
-        self.goal_pos = np.array([0., 4.0, 0.75])
+        self.goal_pos = np.array([4.0, 0.0, 0.75])
+        self.goal_dist_radius = 0.15
         mujoco_env.MujocoEnv.__init__(self, 'ant_maze.xml', 5)
         utils.EzPickle.__init__(self)
 
@@ -29,7 +30,7 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
         curr_pos = self.get_current_pos()
         reward = -1.0
-        if np.linalg.norm(curr_pos - self.goal_pos) < 0.3:
+        if np.linalg.norm(curr_pos - self.goal_pos) < self.goal_dist_radius:
             reward = 0.0
         obs = self._get_obs()
         return obs, reward, False, {}
