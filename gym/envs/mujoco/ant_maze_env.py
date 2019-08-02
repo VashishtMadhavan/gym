@@ -15,48 +15,39 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     """
     def __init__(self):
         self.goal_pos = np.array([4.0, 0.0, 0.75])
-        self.goal_dist_radius = 0.15
+        self.goal_dist_radius = 0.1
         mujoco_env.MujocoEnv.__init__(self, 'ant_maze.xml', 5)
         utils.EzPickle.__init__(self)
 
-    @property
-    def contact_forces(self):
-        return np.clip(self.sim.data.cfrc_ext, -1, 1)
-
+    # TODO: could potentially add other sources of reward
     def step(self, action):
-        self.prev_x_torso = np.copy(self.get_body_com("torso")[0:1])
-        self.prev_y_torso = np.copy(self.get_body_com("torso")[1:2])
+        self.prev_torso_pos = np.copy(self.get_body_com("torso")[:2])
         self.do_simulation(action, self.frame_skip)
 
         curr_pos = self.get_current_pos()
-        reward = -1.0
-        if np.linalg.norm(curr_pos - self.goal_pos) < self.goal_dist_radius:
-            reward = 0.0
+        reward = -np.linalg.norm(curr_pos - self.goal_pos)
         obs = self._get_obs()
         return obs, reward, False, {}
 
     def _get_obs(self):
         position = self.sim.data.qpos.flat.copy()
         velocities = self.sim.data.qvel.flat.copy()
+        contact_force = np.clip(self.sim.data.cfrc_ext, -1, 1).flat.copy()
 
-        x_torso = np.copy(self.get_body_com("torso")[0:1])
-        x_velocity = (x_torso - self.prev_x_torso) / self.dt
-        y_torso = np.copy(self.get_body_com("torso")[1:2])
-        y_velocity = (y_torso - self.prev_y_torso) / self.dt
-        # contact_force = self.contact_forces.flat.copy()
-        # return np.concatenate((x_velocity, y_velocity, position, velocities, contact_force))
+        torso_pos = np.copy(self.get_body_com("torso")[:2])
+        torso_vel = (torso_pos - self.prev_torso_pos) / self.dt
+
         #return np.concatenate((x_velocity, y_velocity, position, velocities))
-        return np.concatenate((x_velocity, y_velocity, position, velocities, self.goal_pos.copy()))
+        return np.concatenate((torso_vel, position, velocities, contact_force))
 
     def get_current_pos(self):
         return np.copy(self.get_body_com("torso"))
 
     def reset_model(self):
-        qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-0.1, high=0.1)
-        qvel = self.init_qvel + self.np_random.randn(self.model.nv) * 0.1
+        qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-.1, high=.1)
+        qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
         self.set_state(qpos, qvel)
-        self.prev_x_torso = np.copy(self.get_body_com("torso")[0:1])
-        self.prev_y_torso = np.copy(self.get_body_com("torso")[1:2])
+        self.prev_torso_pos = np.copy(self.get_body_com("torso")[0:2])
         return self._get_obs()
 
     def viewer_setup(self):
@@ -68,8 +59,3 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.viewer.cam.lookat[2] += 1
         self.viewer.cam.elevation = -85
         self.viewer.cam.azimuth = 235
-
-    @property
-    def tasks(self):
-        t = dict()
-        return t
