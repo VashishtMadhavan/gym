@@ -47,7 +47,7 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-.1, high=.1)
         qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
         self.set_state(qpos, qvel)
-        self.prev_torso_pos = np.copy(self.get_body_com("torso")[0:2])
+        self.prev_torso_pos = np.copy(self.get_body_com("torso")[:2])
         return self._get_obs()
 
     def viewer_setup(self):
