@@ -19,7 +19,6 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         mujoco_env.MujocoEnv.__init__(self, 'ant_maze.xml', 5)
         utils.EzPickle.__init__(self)
 
-    # TODO: could potentially add other sources of reward
     def step(self, action):
         self.prev_torso_pos = np.copy(self.get_body_com("torso")[:2])
         self.do_simulation(action, self.frame_skip)
@@ -38,7 +37,7 @@ class AntMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         torso_vel = (torso_pos - self.prev_torso_pos) / self.dt
 
         #return np.concatenate((x_velocity, y_velocity, position, velocities))
-        return np.concatenate((torso_vel, position, velocities, contact_force))
+        return np.concatenate((torso_vel, position, velocities, contact_force, np.copy(self.goal_pos)))
 
     def get_current_pos(self):
         return np.copy(self.get_body_com("torso"))
